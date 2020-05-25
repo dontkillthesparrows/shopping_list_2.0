@@ -41,7 +41,14 @@ const button = document.querySelector('#submitButton');
 function addValueToLocalStorage() {
   const key = Date.now();
   const inputValue = document.querySelector('#inputValue').value;
-  localStorage.setItem(key, inputValue);
+  localStorage.setItem(
+    key,
+    JSON.stringify({
+      key: key,
+      value: inputValue,
+      done: false,
+    })
+  );
 }
 
 button.onclick = function () {
@@ -52,7 +59,7 @@ button.onclick = function () {
 function getItemsFromStorage() {
   const allItems = [];
   for (let i = 0; i < localStorage.length; i++) {
-    allItems.push(localStorage.getItem(localStorage.key(i)));
+    allItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
   }
   return allItems;
 }
@@ -63,7 +70,7 @@ function createList(callback) {
     listContainer.insertAdjacentHTML(
       'afterend',
       `
-      <li>${item}<span>&#9850;</span></li>
+      <li id="${item.key}">${item.value}<span class="recycle">&#9850;</span></li>
     `
     );
   });
@@ -71,6 +78,21 @@ function createList(callback) {
 
 function removeItemFromLocalStorage(key) {
   localStorage.removeItem(key);
+}
+
+document.addEventListener(
+  'click',
+  function (event) {
+    if (!event.target.matches('.recycle')) return;
+    event.preventDefault();
+    console.log(event.target.parentElement);
+  },
+  false
+);
+
+function removeListItem(element) {
+  console.log(element, 'clicked');
+  element.currentTarget.removeChild(element);
 }
 
 createList(getItemsFromStorage);
