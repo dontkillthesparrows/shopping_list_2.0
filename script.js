@@ -60,10 +60,17 @@ function getItemsFromStorage() {
 function createList(callback) {
   callback().forEach((item) => {
     const listContainer = document.querySelector('#listContainer');
-    const listItem = document.createElement('li');
-    listItem.innerHTML = item;
-    listContainer.appendChild(listItem);
+    listContainer.insertAdjacentHTML(
+      'afterend',
+      `
+      <li>${item}<span>&#9850;</span></li>
+    `
+    );
   });
+}
+
+function removeItemFromLocalStorage(key) {
+  localStorage.removeItem(key);
 }
 
 createList(getItemsFromStorage);
