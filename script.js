@@ -3,6 +3,7 @@ window.onload = init;
 function init() {
   if (storageAvaliable('localStorage')) {
     console.log('local storage avaliable');
+    createList(getAllItemsFromStorage());
   } else {
     console.log('local storage not avaliable');
   }
@@ -49,14 +50,15 @@ function addValueToLocalStorage() {
       done: false,
     })
   );
+  return key;
 }
 
-button.onclick = function () {
-  addValueToLocalStorage();
-  createList();
+button.onclick = async function () {
+  let key = await addValueToLocalStorage();
+  let item = await getItemFromStorage(key);
 };
 
-function getItemsFromStorage() {
+function getAllItemsFromStorage() {
   const allItems = [];
   for (let i = 0; i < localStorage.length; i++) {
     allItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
@@ -64,20 +66,34 @@ function getItemsFromStorage() {
   return allItems;
 }
 
+function getItemFromStorage(key) {
+  const item = JSON.parse(localStorage.getItem(localStorage.key(key)));
+  return item;
+}
+
 function createList(callback) {
-  callback().forEach((item) => {
-    const listContainer = document.querySelector('#listContainer');
-    listContainer.insertAdjacentHTML(
-      'afterend',
-      `
-      <li id="${item.key}">${item.value}<span class="recycle">&#9850;</span></li>
-    `
-    );
+  console.log(callback);
+  callback.forEach((item) => {
+    appendToList(item);
   });
+}
+
+function appendToList(item) {
+  const listContainer = document.querySelector('#list');
+  listContainer.insertAdjacentHTML(
+    'beforeend',
+    `
+    <li>${item.value}<span class="recycle">&#9850;</span></li>
+  `
+  );
 }
 
 function removeItemFromLocalStorage(key) {
   localStorage.removeItem(key);
+}
+
+function removeListItem(element) {
+  element.parentNode.removeChild(element);
 }
 
 document.addEventListener(
@@ -86,13 +102,8 @@ document.addEventListener(
     if (!event.target.matches('.recycle')) return;
     event.preventDefault();
     console.log(event.target.parentElement);
+    removeListItem(event.target.parentElement);
+    removeItemFromLocalStorage(event.target.parentElement.id);
   },
   false
 );
-
-function removeListItem(element) {
-  console.log(element, 'clicked');
-  element.currentTarget.removeChild(element);
-}
-
-createList(getItemsFromStorage);
