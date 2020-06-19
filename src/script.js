@@ -9,9 +9,26 @@ window.onload = init;
 function init() {
   if (storageAvaliable) {
     console.log('storage avaliable');
+    createList(getAllItemsFromStorage());
   } else {
     console.log('storage not avaliable');
   }
+}
+
+function createList(callback) {
+  if (callback === []) return;
+
+  callback.forEach((item) => appendListElement(item.key, item.value));
+}
+
+function getAllItemsFromStorage() {
+  const allItems = [];
+
+  for (let i = 0; i < localStorage.length; i++) {
+    allItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+  }
+
+  return allItems;
 }
 
 function appendListElement(id, value) {
