@@ -3,17 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="stylesheet" type="text/css" href="./style.css" />
     <title>Shopping list 2.0</title>
   </head>
   <body>
     <form>
-      <input type="text" id="inputValue" />
+      <input type="text" id="inputField" />
       <input type="button" value="Add" id="submitButton" />
     </form>
 
-    <div id="listContainer"></div>
+    <div id="listContainer">
+      <ul id="list"></ul>
+    </div>
 
-    <script src="./script.js"></script>
+    <script type="module" src="./src/script.js"></script>
   </body>
 </html>

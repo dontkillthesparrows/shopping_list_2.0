@@ -1,0 +1,11 @@
+.check-box {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.recycle {
+  cursor: pointer;
+}
