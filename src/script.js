@@ -53,6 +53,12 @@ function removeItemFromLocalStorage(key) {
   localStorage.removeItem(key);
 }
 
+function updateStorage(key) {
+  let item = JSON.parse(localStorage.getItem(key));
+  item.done = item.done === false ? true : false;
+  localStorage.setItem(key, JSON.stringify(item));
+}
+
 button.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -71,8 +77,17 @@ document.addEventListener(
     if (!e.target.matches('.recycle')) return;
     e.preventDefault();
     removeListElement(e.target);
-    console.log(e.target.parentElement.id);
     removeItemFromLocalStorage(e.target.parentElement.id);
   },
   false
 );
+
+document.addEventListener('click', function (e) {
+  if (!e.target.matches('.check-box')) return;
+  e.preventDefault();
+  let checkBoxClass = e.target.parentElement.getAttribute('class');
+  checkBoxClass =
+    checkBoxClass === 'list-item' ? 'list-item done' : 'list-item';
+  e.target.parentElement.setAttribute('class', checkBoxClass);
+  updateStorage(e.target.parentElement.id);
+});
