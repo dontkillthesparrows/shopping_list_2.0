@@ -1,7 +1,7 @@
-import { storageAvaliable } from './helperfunctions.js';
+import { storageAvaliable, sortById } from './helperfunctions.js';
 
-const input = document.getElementById('inputField');
-const button = document.getElementById('submitButton');
+const input = document.getElementById('input-field');
+const button = document.getElementById('submit-button');
 const ul = document.getElementById('list');
 
 window.onload = init;
@@ -9,7 +9,9 @@ window.onload = init;
 function init() {
   if (storageAvaliable) {
     console.log('storage avaliable');
-    createList(getAllItemsFromStorage());
+    let list = getAllItemsFromStorage();
+    let sorted = sortById(list);
+    createList(sorted);
   } else {
     console.log('storage not avaliable');
   }
@@ -28,13 +30,15 @@ function getAllItemsFromStorage() {
     allItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
   }
 
+  allItems.sort();
+
   return allItems;
 }
 
 function appendListElement(id, value) {
   ul.insertAdjacentHTML(
     'beforeend',
-    `<li id="${id}" class="list-item">${value}<span class="check-box"></span><span class="recycle">&#9850;</span></li>`
+    `<li id="${id}" class="list-item"><span class="check-box">&#x2610</span>${value}<span class="recycle">&#9850;</span></li>`
   );
 }
 
@@ -86,8 +90,12 @@ document.addEventListener('click', function (e) {
   if (!e.target.matches('.check-box')) return;
   e.preventDefault();
   let checkBoxClass = e.target.parentElement.getAttribute('class');
-  checkBoxClass =
-    checkBoxClass === 'list-item' ? 'list-item done' : 'list-item';
-  e.target.parentElement.setAttribute('class', checkBoxClass);
+  if (checkBoxClass === 'list-item') {
+    e.target.parentElement.setAttribute('class', 'list-item done');
+    e.target.innerHTML = '&#9745';
+  } else {
+    e.target.parentElement.setAttribute('class', 'list-item');
+    e.target.innerHTML = '&#x2610';
+  }
   updateStorage(e.target.parentElement.id);
 });

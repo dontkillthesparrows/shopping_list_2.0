@@ -25,3 +25,20 @@ export function storageAvaliable(type) {
     );
   }
 }
+
+export function sortById(arr) {
+  let swapped;
+  do {
+    swapped = false;
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i].key < arr[i - 1].key) {
+        let n = arr[i];
+        arr[i] = arr[i - 1];
+        arr[i - 1] = n;
+        swapped = true;
+      }
+    }
+  } while (swapped);
+
+  return arr;
+}

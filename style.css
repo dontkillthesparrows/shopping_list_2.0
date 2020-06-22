@@ -1,11 +1,33 @@
+.list-container {
+  width: 20em;
+  padding: 1.5rem;
+}
+
+ul {
+  line-height: 1.5rem;
+  background-color: lightcoral;
+  padding: 1rem;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  opacity: 50%;
+  margin: 0.5rem;
+  padding: 0.3rem;
+}
+
 .check-box {
   display: inline-block;
   height: 15px;
   width: 15px;
-  border: 1px solid black;
   cursor: pointer;
 }
 
 .recycle {
   cursor: pointer;
+}
+
+.done {
 }
