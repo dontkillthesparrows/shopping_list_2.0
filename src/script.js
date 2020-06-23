@@ -1,7 +1,6 @@
 import { storageAvaliable, sortById } from './helperfunctions.js';
 
 const input = document.getElementById('input-field');
-const button = document.getElementById('submit-button');
 const ul = document.getElementById('list');
 
 window.onload = init;
@@ -63,16 +62,17 @@ function updateStorage(key) {
   localStorage.setItem(key, JSON.stringify(item));
 }
 
-button.addEventListener('click', function (e) {
-  e.preventDefault();
+input.addEventListener('keydown', function (e) {
+  if (event.keyCode === 13) {
+    e.preventDefault();
+    if (input.value) {
+      const key = Date.now();
+      appendListElement(key, input.value);
+      addItemToLocalStorage(key, input.value);
+    }
 
-  if (input.value) {
-    const key = Date.now();
-    appendListElement(key, input.value);
-    addItemToLocalStorage(key, input.value);
+    input.value = '';
   }
-
-  input.value = '';
 });
 
 document.addEventListener(

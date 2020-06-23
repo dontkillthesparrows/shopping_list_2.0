@@ -1,21 +1,41 @@
+body {
+  font-family: 'Asap', sans-serif;
+}
 .list-container {
   width: 20em;
-  padding: 1.5rem;
+  line-height: 1.5rem;
+  background-color: #783c30;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
 }
 
 ul {
-  line-height: 1.5rem;
-  background-color: lightcoral;
-  padding: 1rem;
+  margin: 0 0;
+  padding-left: unset;
 }
 
 li {
   display: flex;
   justify-content: space-between;
-  background-color: white;
-  opacity: 50%;
-  margin: 0.5rem;
-  padding: 0.3rem;
+  background-color: #bf8478;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+}
+
+#input-field {
+  background-color: #bf8478;
+  border: none;
+  padding: 0.7rem;
+  color: white;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
 }
 
 .check-box {
@@ -27,7 +47,4 @@ li {
 
 .recycle {
   cursor: pointer;
-}
-
-.done {
 }
